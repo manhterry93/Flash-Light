@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Flash Light</string>
+    <string name="mode_switch">Mode:</string>
+    <string name="sound_switch">Enable sound:</string>
+    <string-array name="modes">
+        <item>Normal</item>
+        <item>Blink</item>
+    </string-array>
+    <string name="app_info">Flash Light ver 1.0</string>
+    <string name="author">Author: Pham Van Manh</string>
+    <string name="email">Email: manhterry93@gmail.com</string>
+    <string name="resource_path">Images and SFX is from: \n https://icons8.com &amp;&amp; http://www.freesfx.co.uk</string>
+    <string name="interval">Interval (ms): </string>
+    <string name="state">Current state: </string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="interval_require">Interval is not set, reset to default"</string>
+    <string name="camera_not_support">Your device does not support Flash</string>
+    <string name="permission_not_granted">This App need Camera Permissison to use Flash</string>
+
+    <string name="ad_unit_banner">ca-app-pub-6288726369328806/2643122179</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Đèn Pin</string>
+    <string name="mode_switch">Chế độ:</string>
+    <string name="sound_switch">Âm thanh:</string>
+    <string-array name="modes">
+        <item>Bình thường</item>
+        <item>Nhấp nháy</item>
+    </string-array>
+    <string name="app_info">Flash Light ver 1.0</string>
+    <string name="author">Tác giả: Phạm Văn Mạnh</string>
+    <string name="email">Email: manhterry93@gmail.com</string>
+    <string name="resource_path">Ảnh và âm thanh được lấy từ: \n https://icons8.com &amp;&amp; http://www.freesfx.co.uk</string>
+    <string name="interval">Lặp lại (ms): </string>
+    <string name="state">Trạng thái: </string>
+    <string name="off">Tắt</string>
+    <string name="on">Bật</string>
+    <string name="interval_require">Chưa đặt thời gian, đưa về mặc định"</string>
+    <string name="camera_not_support">Thiết bị của bạn không hỗ trợ đèn Flash</string>
+    <string name="permission_not_granted">Ứng dụng cần truy cập quyền Camera để sử dụng Flash</string>
+</resources>

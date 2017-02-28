@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/layout_row_mode"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/txt_title_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:padding="3dp"
+                android:text="@string/mode_switch"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/layout_blink_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toLeftOf="@+id/spin_mode"
+                android:layout_toRightOf="@id/txt_title_mode"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp">
+
+                <TextView
+                    android:id="@+id/txt_interval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/interval"
+                    android:textColor="@color/color_text"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edit_interval"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/txt_interval"
+                    android:inputType="numberDecimal"
+                    android:text="300"
+                    android:textColor="@color/color_text"
+                    android:textSize="@dimen/text_size" />
+            </RelativeLayout>
+
+
+            <Spinner
+                android:id="@+id/spin_mode"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/spin_shape"
+                android:dropDownWidth="120dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:spinnerMode="dropdown" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_sound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_row_mode"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/txt_title_sound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:padding="3dp"
+                android:text="@string/sound_switch"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
+
+            <ToggleButton
+                android:id="@+id/switch_sound"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/spin_shape"
+                android:checked="true"
+                android:padding="3dp"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_sound"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/layout_push"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@drawable/background_shape"
+                android:elevation="20dp">
+
+                <ImageButton
+                    android:id="@+id/btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/light_off" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_push"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/state"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_text"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/txt_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:text="@string/off"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_text"
+                    android:textSize="@dimen/text_size" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/ads_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="visible">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/ads_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="@string/ad_unit_banner"></com.google.android.gms.ads.AdView>
+    </FrameLayout>
+</FrameLayout>
