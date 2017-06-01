@@ -163,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         sCurrentMode = Mode.NORMAL;
+                        stopBlink();
+                        isTurnOn = false;
+                        btn.setImageResource(R.drawable.light_off);
+                        txt_state.setText(getResources().getString(R.string.off));
                         layout_blink_time.setVisibility(View.GONE);
                         break;
                     case 1:
@@ -269,8 +273,6 @@ public class MainActivity extends AppCompatActivity {
             case 100:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     grantPermission = true;
-//                    initListMode();
-//                    initSound();
                     initCamera();
                 } else {
                     grantPermission = false;
@@ -346,29 +348,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         timer = new Timer();
-//        TimerTask task = new TimerTask() {
-//            @Override
-//            public void run() {
-//                if (!on_light) {
-//                    on_light = true;
-//                    MainActivity.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            turnOnFlash();
-//                        }
-//                    });
-//                } else {
-//                    on_light = false;
-//                    MainActivity.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            turnOffFlash();
-//                        }
-//                    });
-//                }
-//
-//            }
-//        };
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -474,7 +453,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void flashHandle() {
-        long time = System.currentTimeMillis();
         if (hasFlash) {
             if (grantPermission) {
                 if (isTurnOn) {
