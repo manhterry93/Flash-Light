@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     grantPermission = true;
                     initCamera();
                 } else {
-                    Log.i(TAG, "Request Permission");
+//                    Log.i(TAG, "Request Permission");
                     ActivityCompat.requestPermissions(this, perrmission, 100);
                 }
             } else {
@@ -203,33 +203,33 @@ public class MainActivity extends AppCompatActivity {
         adview.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                Log.i(TAG, "onAdClosed: ");
+//                Log.i(TAG, "onAdClosed: ");
                 super.onAdClosed();
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
-                Log.i(TAG, "onAdFailedToLoad: " + i);
+//                Log.i(TAG, "onAdFailedToLoad: " + i);
                 super.onAdFailedToLoad(i);
             }
 
             @Override
             public void onAdLeftApplication() {
-                Log.i(TAG, "onAdLeftApplication: ");
+//                Log.i(TAG, "onAdLeftApplication: ");
                 super.onAdLeftApplication();
             }
 
             @Override
             public void onAdOpened() {
-                Log.i(TAG, "onAdOpened: ");
+//                Log.i(TAG, "onAdOpened: ");
                 super.onAdOpened();
             }
 
             @Override
             public void onAdLoaded() {
-                Log.i(TAG, "onAdLoaded: ");
+//                Log.i(TAG, "onAdLoaded: ");
                 super.onAdLoaded();
-                Log.i(TAG, "onAdLoaded: adview is shown: " + adview.isShown());
+//                Log.i(TAG, "onAdLoaded: adview is shown: " + adview.isShown());
             }
         });
         adview.loadAd(request);
@@ -330,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
             timer.cancel();
             timer = null;
         }
+
         turnOffFlash();
     }
 
@@ -411,21 +412,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         // All flash when exit
-        if (sPlayer.isPlaying()) {
-            sPlayer.stop();
+        if (sPlayer != null) {
+            if (sPlayer.isPlaying()) {
+                sPlayer.stop();
+            }
+            sPlayer.release();
         }
-        sPlayer.release();
+
         if (sCurrentMode == Mode.BLINK) stopBlink();
         else turnOffFlash();
 
-        if (!newApi) camera.release();
+        if (!newApi) if(camera!=null)camera.release();
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume: ");
+//        Log.i(TAG, "onResume: ");
         if (sCurrentMode != Mode.BLINK) {
             if (newApi && hasFlash && grantPermission) {
                 cameraManager.registerTorchCallback(new CameraManager.TorchCallback() {
@@ -480,7 +484,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case BLINK:
                             stopBlink();
-//                            sendBlinkBroadcast(false);
+                            sendBlinkBroadcast(false);
                             break;
                     }
                     isTurnOn = false;
@@ -509,7 +513,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Your device does not support Flash", Toast.LENGTH_SHORT).show();
         }
 
-        Log.i(TAG, "flashHandle: " + (System.currentTimeMillis() - time));
+//        Log.i(TAG, "flashHandle: " + (System.currentTimeMillis() - time));
     }
 
     public static void openCamera(Camera camera) {
@@ -520,7 +524,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             camera = Camera.open(0);
         } catch (Exception e) {
-            Log.e(TAG, "openCamera: " + e.toString());
+            e.printStackTrace();
+//            Log.e(TAG, "openCamera: " + e.toString());
         }
     }
 

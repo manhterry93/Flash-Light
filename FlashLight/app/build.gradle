@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "itto.pl.flashlight"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.1"
     }
     buildTypes {
         release {

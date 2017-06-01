@@ -1,5 +1,6 @@
 package itto.pl.flashlight.widget;
 
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -22,7 +23,7 @@ import itto.pl.flashlight.R;
  * Created by PL_itto on 2/24/2017.
  */
 public class TorchWidgetProvider extends AppWidgetProvider {
-    private static final String TAG = "PL_itto_TorchWidgetProvider";
+    private static final String TAG = "PL_itto.TorchWidgetProvider";
     private static CameraManager sCameraManager;
     private static String sCameraId = "";
     final public static boolean newApi = Build.VERSION.SDK_INT >= 23;
@@ -37,8 +38,16 @@ public class TorchWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "onReceive: " + intent.getAction());
+
+//        Log.i(TAG, "onReceive: " + intent.getAction());
+//        Log.i(TAG, "onReceive: Service is still running: "+isMyServiceRunning(WidgetService.class,context));
         super.onReceive(context, intent);
+        if(!isMyServiceRunning(WidgetService.class,context)){
+            if (newApi) {
+                Intent intent1 = new Intent(context.getApplicationContext(), WidgetService.class);
+                context.startService(intent1);
+            }
+        }
         if (intent.getAction().equals(action_click)) {
             if (newApi) {
                 if (!isBlink) {
@@ -59,7 +68,7 @@ public class TorchWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        Log.i(TAG, "onEnabled: ");
+//        Log.i(TAG, "onEnabled: ");
         super.onEnabled(context);
         if (newApi) {
             Intent intent = new Intent(context.getApplicationContext(), WidgetService.class);
@@ -69,8 +78,8 @@ public class TorchWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
-        Log.i(TAG, "onDisabled: ");
-        Toast.makeText(context, "Disable Service", Toast.LENGTH_SHORT).show();
+//        Log.i(TAG, "onDisabled: ");
+//        Toast.makeText(context, "Disable Service", Toast.LENGTH_SHORT).show();
         super.onDisabled(context);
         Intent intent = new Intent(context.getApplicationContext(), WidgetService.class);
         context.stopService(intent);
@@ -78,12 +87,19 @@ public class TorchWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
+//        Log.i(TAG,"onUpdate");
         //Setup for new View
+        if(!isMyServiceRunning(WidgetService.class,context)){
+            if (newApi) {
+                Intent intent = new Intent(context.getApplicationContext(), WidgetService.class);
+                context.startService(intent);
+            }
+        }
 
         int[] allWidgetIds = getAllWidgetId(context, appWidgetManager);
-        Log.i(TAG, "onUpdate: " + allWidgetIds.length);
+//        Log.i(TAG, "onUpdate: " + allWidgetIds.length);
         for (int id : allWidgetIds) {
-            Log.w(TAG, "onUpdate: " + id + " " + context.getPackageName());
+//            Log.w(TAG, "onUpdate: " + id + " " + context.getPackageName());
             RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             Intent intent = new Intent(context, TorchWidgetProvider.class);
             intent.setAction(action_click);
@@ -144,6 +160,7 @@ public class TorchWidgetProvider extends AppWidgetProvider {
 
     public static void updateState(Context context, boolean enabled, AppWidgetManager manager, int id) {
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+//        Log.i(TAG,"updateState: "+enabled);
         if (enabled) view.setImageViewResource(R.id.btn_switch, R.drawable.light_on);
         else view.setImageViewResource(R.id.btn_switch, R.drawable.light_off);
         manager.updateAppWidget(id, view);
@@ -171,15 +188,15 @@ public class TorchWidgetProvider extends AppWidgetProvider {
         manager.registerTorchCallback(new CameraManager.TorchCallback() {
             @Override
             public void onTorchModeChanged(String cameraId, boolean enabled) {
-                Log.i(TAG, "onTorchModeChanged: " + enabled);
+//                Log.i(TAG, "onTorchModeChanged: " + enabled);
                 try {
                     if (enabled) enabled = false;
                     else enabled = true;
                     manager.unregisterTorchCallback(this);
                     manager.setTorchMode(sCameraId, enabled);
-                    updateAll(manager, context, appWidgetManager, null);
+//                    updateAll(manager, context, appWidgetManager, null);
                 } catch (Exception e) {
-                    Log.e(TAG, "onTorchModeChanged: " + e.toString());
+//                    Log.e(TAG, "onTorchModeChanged: " + e.toString());
                     e.printStackTrace();
                 }
             }
@@ -187,7 +204,7 @@ public class TorchWidgetProvider extends AppWidgetProvider {
     }
 
     synchronized public static void toggleFlashOldApi(Camera camera) {
-        Log.i(TAG, "toggleFlashOldApi: ");
+//        Log.i(TAG, "toggleFlashOldApi: ");
         Camera.Parameters parameters = camera.getParameters();
         String mode = parameters.getFlashMode();
         if (mode == Camera.Parameters.FLASH_MODE_TORCH) {
@@ -213,6 +230,14 @@ public class TorchWidgetProvider extends AppWidgetProvider {
         return false;
     }
 
-
+    private boolean isMyServiceRunning(Class<?> serviceClass,Context context) {
+        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

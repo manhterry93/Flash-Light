@@ -25,7 +25,7 @@ import itto.pl.flashlight.MainActivity;
  * Created by PL_itto on 2/24/2017.
  */
 public class WidgetService extends Service {
-    private static final String TAG = "PL_itto_WidgetService";
+    private static final String TAG = "PL_itto.WidgetService";
     public static final String ACTION_BLINK = "itto.pl.flash.BLINK";
     private static Timer timer = null;
     private static CameraManager sCameraManager;
@@ -39,7 +39,8 @@ public class WidgetService extends Service {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_BLINK)) {
                 if (newApi) {
-                    changeIconWidgetNewApi(true, context.getApplicationContext());
+                    boolean blink=intent.getBooleanExtra("isBlink",false);
+                    changeIconWidgetNewApi(blink, context.getApplicationContext());
                 }
             }
         }
@@ -54,7 +55,7 @@ public class WidgetService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "onCreate: StartService");
+//        Log.i(TAG, "onCreate: StartService");
         appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
         if (newApi) {
             sCameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
@@ -68,6 +69,7 @@ public class WidgetService extends Service {
                 public void onTorchModeChanged(String cameraId, boolean enabled) {
                     super.onTorchModeChanged(cameraId, enabled);
                     if (!TorchWidgetProvider.isBlink) {
+//                        Log.i(TAG,"update: "+enabled);
                         TorchWidgetProvider.updateAll(sCameraManager, getApplicationContext(), appWidgetManager, enabled);
                     }
                 }
